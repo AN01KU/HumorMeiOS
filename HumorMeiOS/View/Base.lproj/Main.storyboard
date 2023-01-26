@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hCE-L7-RYW">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--My Jokes-->
+        <scene sceneID="vsT-fC-mS5">
+            <objects>
+                <viewController storyboardIdentifier="MyLikedViewController" id="Hr9-5j-ISE" customClass="MyLikedViewController" customModule="HumorMeiOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YXg-oW-JOm">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="69s-RX-FEg">
+                                <rect key="frame" x="0.0" y="109" width="393" height="660"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="CustomTableViewCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="iGn-Ig-aEB" customClass="CustomTableViewCell" customModule="HumorMeiOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iGn-Ig-aEB" id="8wb-ox-HZu">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="WfP-q8-9OV"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="WfP-q8-9OV" firstAttribute="trailing" secondItem="69s-RX-FEg" secondAttribute="trailing" id="1i3-Bc-4PN"/>
+                            <constraint firstItem="WfP-q8-9OV" firstAttribute="bottom" secondItem="69s-RX-FEg" secondAttribute="bottom" id="2Wp-No-E9y"/>
+                            <constraint firstItem="69s-RX-FEg" firstAttribute="top" secondItem="WfP-q8-9OV" secondAttribute="top" constant="50" id="XWG-S8-qVk"/>
+                            <constraint firstItem="69s-RX-FEg" firstAttribute="leading" secondItem="WfP-q8-9OV" secondAttribute="leading" id="jWe-T8-Dov"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Jokes" id="vt4-jJ-rxf"/>
+                    <connections>
+                        <outlet property="tableView" destination="69s-RX-FEg" id="1if-5c-INs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sgt-j8-IT5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-991" y="153"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="99D-c3-oaO">
+            <objects>
+                <tabBarController id="hCE-L7-RYW" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="spQ-5L-wNJ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="zmW-iv-xvy" kind="relationship" relationship="viewControllers" id="Cbq-X7-yHD"/>
+                        <segue destination="Hr9-5j-ISE" kind="relationship" relationship="viewControllers" id="Wn9-4C-NI8"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6aL-2y-lFe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1899" y="-150"/>
+        </scene>
+        <!--Humor Me...-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HumorMeiOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="GlD-yx-k2E">
+                                <rect key="frame" x="0.0" y="153" width="393" height="616"/>
+                                <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CustomTableViewCell" id="Qy5-Rm-Dqe" customClass="CustomTableViewCell" customModule="HumorMeiOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qy5-Rm-Dqe" id="4me-U8-Qss">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="GlD-yx-k2E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4kd-A9-Cil"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GlD-yx-k2E" secondAttribute="trailing" id="IZ0-oq-VIE"/>
+                            <constraint firstItem="GlD-yx-k2E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="jyu-G7-jvH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GlD-yx-k2E" secondAttribute="bottom" id="nRt-yu-Zul"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Humor Me..." id="rbi-0I-w00">
+                        <barButtonItem key="rightBarButtonItem" title="Filter" id="5JQ-nR-dJU">
+                            <connections>
+                                <action selector="filterButtonPressed:" destination="BYZ-38-t0r" id="J8T-6f-0aG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="GlD-yx-k2E" id="0qZ-ub-yQn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-40.458015267175568" y="-483.0985915492958"/>
+        </scene>
+        <!--Categories-->
+        <scene sceneID="LPA-zx-azr">
+            <objects>
+                <viewController storyboardIdentifier="CategoriesViewController" id="Hlg-qD-1nu" customClass="CategoriesViewController" customModule="HumorMeiOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LrK-0W-Chy">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="black" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Tqo-6g-tdO">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Eaz-88-bRX">
+                                    <size key="itemSize" width="127" height="100"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="CategoriesCollectionViewCell" id="0BV-Wf-YbW" customClass="CategoriesCollectionViewCell" customModule="HumorMeiOS" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="127" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JzI-EK-Ww0">
+                                            <rect key="frame" x="0.0" y="0.0" width="127" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Programming" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1zM-zr-MBw">
+                                                    <rect key="frame" x="12" y="34" width="103" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pencil.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AJv-sb-DLE">
+                                                    <rect key="frame" x="103.33333333333333" y="76.666666666666671" width="19.666666666666671" height="19"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <color key="tintColor" systemColor="labelColor"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1zM-zr-MBw" firstAttribute="top" secondItem="JzI-EK-Ww0" secondAttribute="top" constant="34" id="GTD-CP-GPc"/>
+                                                <constraint firstAttribute="bottom" secondItem="AJv-sb-DLE" secondAttribute="bottom" constant="4" id="Not-3B-5h8"/>
+                                                <constraint firstAttribute="trailing" secondItem="AJv-sb-DLE" secondAttribute="trailing" constant="4" id="RbR-ID-R0a"/>
+                                                <constraint firstItem="1zM-zr-MBw" firstAttribute="leading" secondItem="JzI-EK-Ww0" secondAttribute="leading" constant="12" id="k6X-gR-X1k"/>
+                                                <constraint firstItem="1zM-zr-MBw" firstAttribute="centerX" secondItem="JzI-EK-Ww0" secondAttribute="centerX" id="sRj-0E-Fek"/>
+                                                <constraint firstItem="1zM-zr-MBw" firstAttribute="centerY" secondItem="JzI-EK-Ww0" secondAttribute="centerY" id="vEP-N9-JBB"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="categoryLabel" destination="1zM-zr-MBw" id="v0b-ex-C8u"/>
+                                            <outlet property="imageView" destination="AJv-sb-DLE" id="SS4-KD-MC9"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vB8-9V-P3E"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Tqo-6g-tdO" firstAttribute="leading" secondItem="vB8-9V-P3E" secondAttribute="leading" id="BTf-tY-0LR"/>
+                            <constraint firstItem="Tqo-6g-tdO" firstAttribute="top" secondItem="vB8-9V-P3E" secondAttribute="top" id="Tce-iT-ABz"/>
+                            <constraint firstItem="vB8-9V-P3E" firstAttribute="trailing" secondItem="Tqo-6g-tdO" secondAttribute="trailing" id="Uho-B0-fCU"/>
+                            <constraint firstItem="vB8-9V-P3E" firstAttribute="bottom" secondItem="Tqo-6g-tdO" secondAttribute="bottom" id="iIZ-Ic-5hl"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Categories" id="vYF-TA-nLa">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="VJT-H1-xpd">
+                            <connections>
+                                <action selector="doneButtonPressed:" destination="Hlg-qD-1nu" id="1iE-W9-w7F"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="Tqo-6g-tdO" id="lAH-ez-4Qh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qrJ-vE-LFk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-40" y="153"/>
+        </scene>
+        <!--Jokes-->
+        <scene sceneID="cZ2-y1-bRz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zmW-iv-xvy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Jokes" id="JXX-lO-4Ip"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DYk-eM-r0y">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="gTv-bU-Iro"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cAn-K0-8Ik" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-967.17557251908397" y="-483.0985915492958"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="pencil.circle" catalog="system" width="128" height="123"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
