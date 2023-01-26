@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var jokeAPIManager = JokerAPIManager()
     var jokesArray = [Jokes]()
     
-    var selectedCategories = ["Any"]
+    var selectedCategories: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +29,13 @@ class ViewController: UIViewController {
     
     @objc private func didDoubleTap(_ gesture: UITapGestureRecognizer) {
         let gestureView = gesture.view as! CustomTableViewCell
-        gestureView.addToLiked()
-        tableView.reloadData()
+        let id = gestureView.jokeId!
+        gestureView.addToLiked(id)
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-//        tableView.reloadData()
+        tableView.reloadData()
     }
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
@@ -49,12 +49,15 @@ class ViewController: UIViewController {
 
 //MARK: - JokerAPIManagerDelegate
 extension ViewController: JokerAPIManagerDelegate {
+    func postError(error: String) {
+        self.jokesArray.removeAll()
+    }
+    
     func postJokes(jokes: [Jokes]) {
         self.jokesArray = jokes
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
-        
     }
 }
 
@@ -86,11 +89,7 @@ extension ViewController: UITableViewDataSource {
 
 extension ViewController: CategoriesViewControllerDelegate {
     func postCategories(_ categories: [String]) {
-        // reload the table cell with new jokes.
-        for eachCategory in categories {
-            if !selectedCategories.contains(eachCategory){
-                selectedCategories.append(eachCategory)
-            }
-        }
+        selectedCategories = categories
+        jokeAPIManager.getJokeWithCategory(amount: 10, categories: categories)
     }
 }

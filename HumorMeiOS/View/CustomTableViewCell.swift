@@ -23,18 +23,32 @@ class CustomTableViewCell: UITableViewCell {
         titleLabel.text = jokeText
         detailLabel.text = jokeCategory
         likedJokes = LikedJoke.fetchLikedJokes()
-        let alreadyLiked = likedJokes?.contains { $0.id == jokeId! }
-        if alreadyLiked! {
+        if checkIfAlreadyLiked(jokeId!) {
             likeImageView.image = UIImage(systemName: "heart.fill")
         }
     }
     
-    func addToLiked() {
-        let _ = LikedJoke.addLikedJoke(joke: titleLabel.text!, category: detailLabel.text!, id: jokeId!)
+    func addToLiked(_ id: Int) {
+
+        if checkIfAlreadyLiked(id) == false {
+            likeImageView.image = UIImage(systemName: "heart.fill")
+            let _ = LikedJoke.addLikedJoke(joke: titleLabel.text!, category: detailLabel.text!, id: jokeId!)
+        }
     }
     
     func deleteFromLiked() {
         let _ = LikedJoke.deleteLikedJoke(jokeId: jokeId!)
     }
+
+    func checkIfAlreadyLiked(_ id: Int) -> Bool {
+        likedJokes = LikedJoke.fetchLikedJokes()
+        
+        let alreadyLiked = likedJokes?.contains { $0.id == id }
+        if alreadyLiked! {
+            return true
+        }
+        return false
+    }
+    
 }
 

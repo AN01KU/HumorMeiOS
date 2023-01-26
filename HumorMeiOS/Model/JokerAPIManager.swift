@@ -9,13 +9,15 @@ import Foundation
 
 protocol JokerAPIManagerDelegate: NSObject {
     func postJokes(jokes: [Jokes])
+    
+    func postError(error: String)
 }
 
 struct JokerAPIManager {
     
     weak var delegate: JokerAPIManagerDelegate?
     
-    var baseURL = "https://sv443.net/jokeapi/v2/joke"
+    var baseURL = "https://sv443.net/jokeapi/v2/joke/"
     
     func getJokes(){
         let urlString = "\(baseURL)/Any?type=single&amount=10"
@@ -23,7 +25,12 @@ struct JokerAPIManager {
     }
     
     func getJokeWithCategory(amount: Int,categories: [String]){
-        let urlString = "\(baseURL)/\(categories)?type=single&amount=\(amount)"
+        var someString = baseURL
+        for eachCategory in categories {
+            someString += "\(eachCategory),"
+        }
+        someString.removeLast()
+        let urlString = "\(someString)?type=single&amount=\(amount)"
         performRequest(with: urlString)
     }
     
@@ -34,6 +41,7 @@ struct JokerAPIManager {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
                 if (error != nil) != false {
+                    delegate?.postError(error: "No Jokes Found")
                     return
                 }
                 if let safeData = data {

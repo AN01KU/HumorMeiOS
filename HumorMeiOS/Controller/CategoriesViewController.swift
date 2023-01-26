@@ -21,6 +21,8 @@ class CategoriesViewController: UIViewController {
     
     var selectedCategories = [String]()
     
+    var startIdx: IndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,7 +32,18 @@ class CategoriesViewController: UIViewController {
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        collectionView.reloadData()
+    }
+
+    
+    
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
+        if selectedCategories.contains("Any") && selectedCategories.count > 1 {
+            selectedCategories = selectedCategories.filter { $0 != "Any" }
+        }
         print(selectedCategories)
         delegate?.postCategories(selectedCategories)
         navigationController?.popViewController(animated: true)
@@ -38,6 +51,7 @@ class CategoriesViewController: UIViewController {
     
 }
 
+//MARK: - CategoriesViewController
 extension CategoriesViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if selectedCategories.contains(categories[indexPath.row]) {
@@ -47,6 +61,11 @@ extension CategoriesViewController: UICollectionViewDelegate {
             selectedCategories.append(categories[indexPath.row])
             collectionView.reloadItems(at: [indexPath])
         }
+        if selectedCategories.contains("Any") && selectedCategories.count > 1 {
+            selectedCategories = selectedCategories.filter { $0 != "Any" }
+            collectionView.reloadItems(at: [startIdx!])
+        }
+      
     }
 
 }
@@ -68,6 +87,10 @@ extension CategoriesViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoriesCollectionViewCell", for: indexPath) as? CategoriesCollectionViewCell else {
             return UICollectionViewCell()
         }
+        if indexPath.row == 0 {
+            startIdx = indexPath
+        }
+
         cell.categoryLabel.text = categories[indexPath.row]
         if !selectedCategories.contains(categories[indexPath.row]) {
             cell.imageView.image = UIImage(systemName: "pencil.circle")
