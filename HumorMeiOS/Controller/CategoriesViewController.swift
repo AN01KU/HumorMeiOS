@@ -44,7 +44,6 @@ class CategoriesViewController: UIViewController {
         if selectedCategories.contains("Any") && selectedCategories.count > 1 {
             selectedCategories = selectedCategories.filter { $0 != "Any" }
         }
-        print(selectedCategories)
         delegate?.postCategories(selectedCategories)
         navigationController?.popViewController(animated: true)
     }

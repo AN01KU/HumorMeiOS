@@ -10,19 +10,19 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchTextField: UITextField!
     
     var jokeAPIManager = JokerAPIManager()
     var jokesArray = [Jokes]()
-    
     var selectedCategories: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.register(UINib(nibName: CustomTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CustomTableViewCell.identifier)
-        
+        searchTextField.delegate = self
         jokeAPIManager.delegate = self
         jokeAPIManager.getJokes()
     }
@@ -34,9 +34,12 @@ class ViewController: UIViewController {
     }
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        tableView.reloadData()
+    @IBAction func reloadButtonPressed(_ sender: UIBarButtonItem) {
+        
+        jokeAPIManager.getJokes()
+        
     }
+    
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "CategoriesViewController") as! CategoriesViewController
@@ -45,16 +48,69 @@ class ViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
+    @IBAction func searchButtonPressed(_ sender: UIButton) {
+        searchTextField.endEditing(true)
+        
+        let searchText = searchTextField.text ?? ""
+        if searchText != "" {
+            searchForJokes(searchText)
+        } else {
+            jokeAPIManager.getJokes()
+        }
+        searchTextField.text = ""
+    }
+    
+    func searchForJokes(_ searchTerm: String) {
+        
+        var filterdJokes = [Jokes]()
+        
+        for eachJoke in jokesArray {
+            if eachJoke.joke.contains(searchTerm) || eachJoke.category.contains(searchTerm) {
+                filterdJokes.append(eachJoke)
+            }
+        }
+        jokesArray.removeAll()
+        jokesArray = filterdJokes
+        tableView.reloadData()
+    }
+  
+}
+
+extension ViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.endEditing(true)
+        
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        if searchTextField.text != "" {
+            return true
+        } else {
+            searchTextField.placeholder = "Type something..."
+            return false
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        let searchText = searchTextField.text ?? ""
+        searchForJokes(searchText)
+        searchTextField.text = ""
+    }
+
+    
 }
 
 //MARK: - JokerAPIManagerDelegate
 extension ViewController: JokerAPIManagerDelegate {
     func postError(error: String) {
-        self.jokesArray.removeAll()
+        // show no jokes with tht filter
+        
     }
     
     func postJokes(jokes: [Jokes]) {
-        self.jokesArray = jokes
+        jokesArray = jokes
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }

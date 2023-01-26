@@ -91,17 +91,43 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="5NX-f4-q6I">
+                                <rect key="frame" x="54" y="110.99999999999999" width="285" height="34.333333333333329"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search Jokes" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vvx-ii-SBG">
+                                        <rect key="frame" x="0.0" y="0.0" width="230" height="34.333333333333336"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uxF-gH-Dcf">
+                                        <rect key="frame" x="238" y="0.0" width="47" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="🔎"/>
+                                        <connections>
+                                            <action selector="searchButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ihs-Xz-LD5"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5NX-f4-q6I" secondAttribute="trailing" constant="54" id="0zt-PS-xbR"/>
                             <constraint firstItem="GlD-yx-k2E" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4kd-A9-Cil"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="GlD-yx-k2E" secondAttribute="trailing" id="IZ0-oq-VIE"/>
+                            <constraint firstItem="5NX-f4-q6I" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="WNk-OY-NUZ"/>
+                            <constraint firstItem="5NX-f4-q6I" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="54" id="hbD-dh-AWy"/>
                             <constraint firstItem="GlD-yx-k2E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="jyu-G7-jvH"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="GlD-yx-k2E" secondAttribute="bottom" id="nRt-yu-Zul"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Humor Me..." id="rbi-0I-w00">
+                        <barButtonItem key="leftBarButtonItem" title="Reload" id="bsh-3H-xQK">
+                            <connections>
+                                <action selector="reloadButtonPressed:" destination="BYZ-38-t0r" id="WHD-oF-taU"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Filter" id="5JQ-nR-dJU">
                             <connections>
                                 <action selector="filterButtonPressed:" destination="BYZ-38-t0r" id="J8T-6f-0aG"/>
@@ -109,6 +135,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchTextField" destination="vvx-ii-SBG" id="vB0-ei-HPQ"/>
                         <outlet property="tableView" destination="GlD-yx-k2E" id="0qZ-ub-yQn"/>
                     </connections>
                 </viewController>

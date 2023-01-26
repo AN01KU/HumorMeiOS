@@ -29,16 +29,12 @@ class CustomTableViewCell: UITableViewCell {
     }
     
     func addToLiked(_ id: Int) {
-
         if checkIfAlreadyLiked(id) == false {
             likeImageView.image = UIImage(systemName: "heart.fill")
             let _ = LikedJoke.addLikedJoke(joke: titleLabel.text!, category: detailLabel.text!, id: jokeId!)
         }
     }
-    
-    func deleteFromLiked() {
-        let _ = LikedJoke.deleteLikedJoke(jokeId: jokeId!)
-    }
+
 
     func checkIfAlreadyLiked(_ id: Int) -> Bool {
         likedJokes = LikedJoke.fetchLikedJokes()
