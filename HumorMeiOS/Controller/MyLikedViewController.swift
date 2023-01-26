@@ -10,6 +10,7 @@ import UIKit
 class MyLikedViewController: UIViewController {
     
     var likedJokes = [LikedJoke]()
+    
 
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
@@ -47,9 +48,9 @@ extension MyLikedViewController: UITableViewDataSource {
         guard let customCell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath)  as? CustomTableViewCell else {
             return UITableViewCell()
         }
-        customCell.titleLabel.text = likedJokes[indexPath.row].joke
-        customCell.detailLabel.text = likedJokes[indexPath.row].category
-        customCell.likeImageView.image = UIImage(systemName: "heart.fill")
+        var tpJoke = likedJokes[indexPath.row]
+        
+        customCell.prepareCell(tpJoke.joke!, tpJoke.category!, Int(tpJoke.id))
         return customCell
     }
 }

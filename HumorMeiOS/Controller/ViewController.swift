@@ -15,7 +15,6 @@ class ViewController: UIViewController {
     var jokesArray = [Jokes]()
     
     var selectedCategories = ["Any"]
-    var likedJokes = [LikedJoke]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,20 +25,17 @@ class ViewController: UIViewController {
         
         jokeAPIManager.delegate = self
         jokeAPIManager.getJokes()
-        likedJokes = LikedJoke.fetchLikedJokes()
-        tableView.reloadData()
-  
     }
     
     @objc private func didDoubleTap(_ gesture: UITapGestureRecognizer) {
         let gestureView = gesture.view as! CustomTableViewCell
         gestureView.addToLiked()
+        tableView.reloadData()
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-        likedJokes = LikedJoke.fetchLikedJokes()
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
@@ -64,10 +60,7 @@ extension ViewController: JokerAPIManagerDelegate {
 
 //MARK: - UITableViewDelegate
 extension ViewController: UITableViewDelegate {
-
     
-    
-        
 }
 
 //MARK: - UITableViewDataSource
@@ -84,18 +77,9 @@ extension ViewController: UITableViewDataSource {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         tapGesture.numberOfTapsRequired = 2
-        
         customCell.addGestureRecognizer(tapGesture)
-        customCell.titleLabel.text = jokesArray[indexPath.row].joke
-        customCell.detailLabel.text = jokesArray[indexPath.row].category
-        
-        let alreadyLiked = likedJokes.contains { $0.joke == jokesArray[indexPath.row].joke }
-            
-        if alreadyLiked {
-            customCell.likeImageView.image = UIImage(systemName: "heart.fill")
-        } else {
-            customCell.likeImageView.image = UIImage(systemName: "heart")
-        }  
+        let tpJoke = jokesArray[indexPath.row]
+        customCell.prepareCell(tpJoke.joke, tpJoke.category, tpJoke.id)
         return customCell
     }
 }
