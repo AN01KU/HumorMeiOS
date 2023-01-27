@@ -20,18 +20,24 @@ struct JokerAPIManager {
     var baseURL = "https://sv443.net/jokeapi/v2/joke/"
     
     func getJokes(){
-        let urlString = "\(baseURL)/Any?type=single&amount=10"
+        let urlString = "\(baseURL)/Any?type=single&amount=20&backlistFlags=nsfw,sexist"
         performRequest(with: urlString)
     }
+
     
-    func getJokeWithCategory(amount: Int,categories: [String]){
+    
+    func getJokeWithFilter(categories: [String], searchQuery: String) {
         var someString = baseURL
+        
         for eachCategory in categories {
             someString += "\(eachCategory),"
         }
         someString.removeLast()
-        let urlString = "\(someString)?type=single&amount=\(amount)"
+        let urlString = "\(someString)?type=single&contains=\(searchQuery)&amount=20&backlistFlags=nsfw,sexist"
+        
         performRequest(with: urlString)
+        
+        
     }
     
     
@@ -40,8 +46,9 @@ struct JokerAPIManager {
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
+                
                 if (error != nil) == true {
-                    delegate?.postError(error: "No Jokes Found")
+//                    delegate?.postError(error: "Could not find any jokes :(")
                     return
                 }
                 if let safeData = data {
@@ -61,6 +68,7 @@ struct JokerAPIManager {
             let jokes = decodedData.jokes
             return jokes
         } catch {
+            delegate?.postError(error: "Could not find any jokes :(")
             return nil
         }
     }

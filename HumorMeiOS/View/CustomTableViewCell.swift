@@ -22,22 +22,22 @@ class CustomTableViewCell: UITableViewCell {
         jokeId = id
         titleLabel.text = jokeText
         detailLabel.text = jokeCategory
-        if checkIfAlreadyLiked(jokeId!) {
+        if checkIfAlreadyLiked(jokeText) {
             likeImageView.image = UIImage(systemName: "heart.fill")
         }
     }
     
-    func addToLiked(_ id: Int) {
-        if checkIfAlreadyLiked(id) == false {
+    func addToLiked(_ jokeText: String) {
+        if checkIfAlreadyLiked(jokeText) == false {
             likeImageView.image = UIImage(systemName: "heart.fill")
             let _ = LikedJoke.addLikedJoke(joke: titleLabel.text!, category: detailLabel.text!, id: jokeId!)
         }
     }
 
 
-    func checkIfAlreadyLiked(_ id: Int) -> Bool {
+    func checkIfAlreadyLiked(_ jokeText: String) -> Bool {
         likedJokes = LikedJoke.fetchLikedJokes()
-        let alreadyLiked = likedJokes?.contains { $0.id == id }
+        let alreadyLiked = likedJokes?.contains { $0.joke == jokeText }
         if alreadyLiked! {
             return true
         }

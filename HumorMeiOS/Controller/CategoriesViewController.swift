@@ -90,6 +90,11 @@ extension CategoriesViewController: UICollectionViewDataSource {
             startIdx = indexPath
         }
 
+        
+        
+        
+        cell.prepareShadow()
+        
         cell.categoryLabel.text = categories[indexPath.row]
         if !selectedCategories.contains(categories[indexPath.row]) {
             cell.imageView.image = UIImage(systemName: "pencil.circle")

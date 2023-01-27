@@ -16,8 +16,8 @@ class ViewController: UIViewController {
     var refreshControl = UIRefreshControl()
     var jokeAPIManager = JokerAPIManager()
     var jokesArray = [Jokes]()
-    var filteredJokes = [Jokes]()
     var selectedCategories: [String] = []
+    var searchQuery = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,9 +29,16 @@ class ViewController: UIViewController {
         jokeAPIManager.getJokes()
         refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
         tableView.addSubview(refreshControl)
+        selectedCategories.append("Any")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+    }
+    
     @objc func refresh(send: UIRefreshControl) {
         DispatchQueue.main.async {
+            self.searchText.text = ""
             self.jokeAPIManager.getJokes()
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
@@ -40,8 +47,8 @@ class ViewController: UIViewController {
     
     @objc private func didDoubleTap(_ gesture: UITapGestureRecognizer) {
         let gestureView = gesture.view as! CustomTableViewCell
-        let id = gestureView.jokeId!
-        gestureView.addToLiked(id)
+        let jokeText = gestureView.titleLabel.text
+        gestureView.addToLiked(jokeText!)
     }    
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
@@ -55,26 +62,34 @@ class ViewController: UIViewController {
 //MARK: - UISearchBarDelegate
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText !=  "" {
-            filteredJokes = jokesArray.filter { $0.joke.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
+       searchQuery = searchText
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if searchQuery != "" {
+            jokeAPIManager.getJokeWithFilter(categories: selectedCategories, searchQuery: searchQuery)
             tableView.reloadData()
-            
         } else {
-            filteredJokes = jokesArray
+            jokeAPIManager.getJokes()
             tableView.reloadData()
         }
     }
+    
+
 }
 
 //MARK: - JokerAPIManagerDelegate
 extension ViewController: JokerAPIManagerDelegate {
     func postError(error: String) {
-        
+//        print(error)
+        jokesArray.removeAll()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func postJokes(jokes: [Jokes]) {
         jokesArray = jokes
-        filteredJokes = jokes
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -89,7 +104,7 @@ extension ViewController: UITableViewDelegate {
 //MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredJokes.count
+        return jokesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,7 +116,7 @@ extension ViewController: UITableViewDataSource {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         tapGesture.numberOfTapsRequired = 2
         customCell.addGestureRecognizer(tapGesture)
-        let tpJoke = filteredJokes[indexPath.row]
+        let tpJoke = jokesArray[indexPath.row]
         customCell.prepareCell(tpJoke.joke, tpJoke.category, tpJoke.id)
         return customCell
     }
@@ -110,6 +125,7 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: CategoriesViewControllerDelegate {
     func postCategories(_ categories: [String]) {
         selectedCategories = categories
-        jokeAPIManager.getJokeWithCategory(amount: 10, categories: categories)
+        jokeAPIManager.getJokeWithFilter(categories: categories, searchQuery: searchQuery)
     }
 }
+
