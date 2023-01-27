@@ -22,7 +22,6 @@ class CustomTableViewCell: UITableViewCell {
         jokeId = id
         titleLabel.text = jokeText
         detailLabel.text = jokeCategory
-        likedJokes = LikedJoke.fetchLikedJokes()
         if checkIfAlreadyLiked(jokeId!) {
             likeImageView.image = UIImage(systemName: "heart.fill")
         }
@@ -38,7 +37,6 @@ class CustomTableViewCell: UITableViewCell {
 
     func checkIfAlreadyLiked(_ id: Int) -> Bool {
         likedJokes = LikedJoke.fetchLikedJokes()
-        
         let alreadyLiked = likedJokes?.contains { $0.id == id }
         if alreadyLiked! {
             return true
