@@ -32,9 +32,12 @@ struct JokerAPIManager {
         for eachCategory in categories {
             someString += "\(eachCategory),"
         }
+        if categories.isEmpty {
+            someString = "Any"
+        }
         someString.removeLast()
         let urlString = "\(someString)?type=single&contains=\(searchQuery)&amount=20&backlistFlags=nsfw,sexist"
-        
+        print(urlString)
         performRequest(with: urlString)
         
         
