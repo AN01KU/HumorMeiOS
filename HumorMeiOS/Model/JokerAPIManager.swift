@@ -40,7 +40,7 @@ struct JokerAPIManager {
         if let url = URL(string: urlString){
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { data, response, error in
-                if (error != nil) != false {
+                if (error != nil) == true {
                     delegate?.postError(error: "No Jokes Found")
                     return
                 }

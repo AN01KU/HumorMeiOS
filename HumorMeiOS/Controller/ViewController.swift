@@ -10,10 +10,13 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var searchText: UISearchBar!
     
+
+    var refreshControl = UIRefreshControl()
     var jokeAPIManager = JokerAPIManager()
     var jokesArray = [Jokes]()
+    var filteredJokes = [Jokes]()
     var selectedCategories: [String] = []
     
     override func viewDidLoad() {
@@ -22,24 +25,25 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: CustomTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: CustomTableViewCell.identifier)
-        searchTextField.delegate = self
         jokeAPIManager.delegate = self
         jokeAPIManager.getJokes()
+        refreshControl.addTarget(self, action: #selector(refresh), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+    }
+    
+    @objc func refresh(send: UIRefreshControl) {
+        DispatchQueue.main.async {
+            self.jokeAPIManager.getJokes()
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
     }
     
     @objc private func didDoubleTap(_ gesture: UITapGestureRecognizer) {
         let gestureView = gesture.view as! CustomTableViewCell
         let id = gestureView.jokeId!
         gestureView.addToLiked(id)
-    }
-    
-    
-    @IBAction func reloadButtonPressed(_ sender: UIBarButtonItem) {
-        
-        jokeAPIManager.getJokes()
-        
-    }
-    
+    }    
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "CategoriesViewController") as! CategoriesViewController
@@ -47,70 +51,32 @@ class ViewController: UIViewController {
         vc.selectedCategories.append(contentsOf: selectedCategories)
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    @IBAction func searchButtonPressed(_ sender: UIButton) {
-        searchTextField.endEditing(true)
-        
-        let searchText = searchTextField.text ?? ""
-        if searchText != "" {
-            searchForJokes(searchText)
-        } else {
-            jokeAPIManager.getJokes()
-        }
-        searchTextField.text = ""
-    }
-    
-    func searchForJokes(_ searchTerm: String) {
-        
-        var filterdJokes = [Jokes]()
-        
-        for eachJoke in jokesArray {
-            if eachJoke.joke.contains(searchTerm) || eachJoke.category.contains(searchTerm) {
-                filterdJokes.append(eachJoke)
-            }
-        }
-        jokesArray.removeAll()
-        jokesArray = filterdJokes
-        tableView.reloadData()
-    }
-  
 }
 
-extension ViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchTextField.endEditing(true)
+
+extension ViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        return true
-    }
-    
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        if searchTextField.text != "" {
-            return true
+        if searchText !=  "" {
+            filteredJokes = jokesArray.filter { $0.joke.contains(searchText) || $0.category.contains(searchText)}
+            tableView.reloadData()
+            
         } else {
-            searchTextField.placeholder = "Type something..."
-            return false
+            filteredJokes = jokesArray
+            tableView.reloadData()
         }
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let searchText = searchTextField.text ?? ""
-        searchForJokes(searchText)
-        searchTextField.text = ""
-    }
-
-    
 }
 
 //MARK: - JokerAPIManagerDelegate
 extension ViewController: JokerAPIManagerDelegate {
     func postError(error: String) {
-        // show no jokes with tht filter
         
     }
     
     func postJokes(jokes: [Jokes]) {
         jokesArray = jokes
+        filteredJokes = jokes
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -125,7 +91,7 @@ extension ViewController: UITableViewDelegate {
 //MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return jokesArray.count
+        return filteredJokes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,7 +103,7 @@ extension ViewController: UITableViewDataSource {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap(_:)))
         tapGesture.numberOfTapsRequired = 2
         customCell.addGestureRecognizer(tapGesture)
-        let tpJoke = jokesArray[indexPath.row]
+        let tpJoke = filteredJokes[indexPath.row]
         customCell.prepareCell(tpJoke.joke, tpJoke.category, tpJoke.id)
         return customCell
     }
