@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        tableView.reloadData()
     }
     
     @objc func refresh(send: UIRefreshControl) {
@@ -47,8 +47,10 @@ class ViewController: UIViewController {
     
     @objc private func didDoubleTap(_ gesture: UITapGestureRecognizer) {
         let gestureView = gesture.view as! CustomTableViewCell
-        let jokeText = gestureView.titleLabel.text
-        gestureView.addToLiked(jokeText!)
+        gestureView.isSelected = false
+
+        let jokeId = gestureView.jokeId         
+        gestureView.addToLiked(jokeId!)
     }    
     
     @IBAction func filterButtonPressed(_ sender: UIBarButtonItem) {
@@ -74,16 +76,22 @@ extension ViewController: UISearchBarDelegate {
             tableView.reloadData()
         }
     }
-    
-
 }
 
 //MARK: - JokerAPIManagerDelegate
 extension ViewController: JokerAPIManagerDelegate {
     func postError(error: String) {
-//        print(error)
-        jokesArray.removeAll()
+
+        let alert = UIAlertController(title: "Alert", message: "Cant find any Jokes :( \n Refreshing Jokes", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .destructive))
+        selectedCategories.removeAll()
+        searchQuery = ""
+        searchText.text = ""
+  
         DispatchQueue.main.async {
+            self.present(alert, animated: true)
+            self.jokeAPIManager.getJokes()
             self.tableView.reloadData()
         }
     }
