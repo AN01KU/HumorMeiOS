@@ -38,8 +38,7 @@ class ViewController: UIViewController {
     
     @objc func refresh(send: UIRefreshControl) {
         DispatchQueue.main.async {
-            self.searchText.text = ""
-            self.jokeAPIManager.getJokes()
+            self.jokeAPIManager.getJokeWithFilter(categories: self.selectedCategories, searchQuery: self.searchQuery)
             self.tableView.reloadData()
             self.refreshControl.endRefreshing()
         }
@@ -81,19 +80,20 @@ extension ViewController: UISearchBarDelegate {
 //MARK: - JokerAPIManagerDelegate
 extension ViewController: JokerAPIManagerDelegate {
     func postError(error: String) {
-
-        let alert = UIAlertController(title: "Alert", message: "Cant find any Jokes :( \n Refreshing Jokes", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Ok", style: .destructive))
         selectedCategories.removeAll()
-        searchQuery = ""
-        searchText.text = ""
-  
+        
+        
+        self.jokeAPIManager.getJokes()
+
         DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Alert", message: "Cant find any Jokes :( \n Refreshing Jokes", preferredStyle: .alert)
+
+            self.searchText.text = ""
+            self.searchQuery = ""
+            alert.addAction(UIAlertAction(title: "Ok", style: .destructive))
             self.present(alert, animated: true)
-            self.jokeAPIManager.getJokes()
             self.tableView.reloadData()
-        }
+      }
     }
     
     func postJokes(jokes: [Jokes]) {
