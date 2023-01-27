@@ -28,17 +28,19 @@ struct JokerAPIManager {
     
     func getJokeWithFilter(categories: [String], searchQuery: String) {
         var someString = baseURL
-        
-        for eachCategory in categories {
-            someString += "\(eachCategory),"
-        }
         if categories.isEmpty {
-            someString = "Any"
+            someString += "Any"
+        } else {
+            for eachCategory in categories {
+                someString += "\(eachCategory),"
+            }
+            someString.removeLast()
         }
-        someString.removeLast()
+        
         let urlString = "\(someString)?type=single&contains=\(searchQuery)&amount=20&backlistFlags=nsfw,sexist"
         print(urlString)
         performRequest(with: urlString)
+        
         
         
     }
