@@ -31,6 +31,10 @@ class ViewController: UIViewController {
         tableView.addSubview(refreshControl)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+//        tableView.reloadData()
+    }
+    
     @objc func refresh(send: UIRefreshControl) {
         DispatchQueue.main.async {
             self.jokeAPIManager.getJokes()
@@ -53,12 +57,11 @@ class ViewController: UIViewController {
     }
 }
 
-
+//MARK: - UISearchBarDelegate
 extension ViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         if searchText !=  "" {
-            filteredJokes = jokesArray.filter { $0.joke.contains(searchText) || $0.category.contains(searchText)}
+            filteredJokes = jokesArray.filter { $0.joke.lowercased().contains(searchText.lowercased()) || $0.category.lowercased().contains(searchText.lowercased())}
             tableView.reloadData()
             
         } else {

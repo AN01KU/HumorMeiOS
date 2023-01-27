@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Jokes-->
+        <!--My Liked View Controller-->
         <scene sceneID="vsT-fC-mS5">
             <objects>
                 <viewController storyboardIdentifier="MyLikedViewController" id="Hr9-5j-ISE" customClass="MyLikedViewController" customModule="HumorMeiOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -31,17 +31,27 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yk5-rn-mEq">
+                                <rect key="frame" x="170.66666666666666" y="63" width="52" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="WfP-q8-9OV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="WfP-q8-9OV" firstAttribute="trailing" secondItem="69s-RX-FEg" secondAttribute="trailing" id="1i3-Bc-4PN"/>
                             <constraint firstItem="WfP-q8-9OV" firstAttribute="bottom" secondItem="69s-RX-FEg" secondAttribute="bottom" id="2Wp-No-E9y"/>
+                            <constraint firstItem="69s-RX-FEg" firstAttribute="top" secondItem="Yk5-rn-mEq" secondAttribute="bottom" constant="2" id="7qw-Wh-f6D"/>
+                            <constraint firstItem="Yk5-rn-mEq" firstAttribute="top" secondItem="WfP-q8-9OV" secondAttribute="top" constant="4" id="8xn-WH-XU9"/>
                             <constraint firstItem="69s-RX-FEg" firstAttribute="top" secondItem="WfP-q8-9OV" secondAttribute="top" constant="50" id="XWG-S8-qVk"/>
+                            <constraint firstItem="Yk5-rn-mEq" firstAttribute="leading" secondItem="WfP-q8-9OV" secondAttribute="leading" constant="170.5" id="g1P-EV-Nqq"/>
                             <constraint firstItem="69s-RX-FEg" firstAttribute="leading" secondItem="WfP-q8-9OV" secondAttribute="leading" id="jWe-T8-Dov"/>
+                            <constraint firstItem="WfP-q8-9OV" firstAttribute="trailing" secondItem="Yk5-rn-mEq" secondAttribute="trailing" constant="170.5" id="s2h-Fh-wVZ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="My Jokes" id="vt4-jJ-rxf"/>
+                    <tabBarItem key="tabBarItem" systemItem="favorites" id="vt4-jJ-rxf"/>
                     <connections>
                         <outlet property="tableView" destination="69s-RX-FEg" id="1if-5c-INs"/>
                     </connections>
@@ -54,6 +64,7 @@
         <scene sceneID="99D-c3-oaO">
             <objects>
                 <tabBarController id="hCE-L7-RYW" sceneMemberID="viewController">
+                    <value key="contentSizeForViewInPopover" type="size" width="0.0" height="0.0"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="spQ-5L-wNJ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -204,13 +215,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qrJ-vE-LFk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-40" y="153"/>
+            <point key="canvasLocation" x="828" y="-483"/>
         </scene>
-        <!--Jokes-->
+        <!--Navigation Controller-->
         <scene sceneID="cZ2-y1-bRz">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zmW-iv-xvy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Jokes" id="JXX-lO-4Ip"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="JXX-lO-4Ip">
+                        <inset key="largeContentSizeImageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DYk-eM-r0y">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
